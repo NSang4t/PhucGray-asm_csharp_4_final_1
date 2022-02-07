@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using asm_final_1.Models;
+using asm_final_1.Models.OthersModels;
+using asm_final_1.Utils;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,50 +13,42 @@ namespace asm_final_1.Controllers
 {
     public class ProductController : Controller
     {
+        private readonly AsmContext context;
+        private readonly IWebHostEnvironment webHostEnvironment;
+        public ProductController(AsmContext context, IWebHostEnvironment webHostEnvironment)
+        {
+            this.context = context;
+            this.webHostEnvironment = webHostEnvironment;
+        }
+
         // Home page
         [Route("/")]
-        public IActionResult Home()
+        public async Task<IActionResult> Home()
         {
+            var topProducts = await context.Products.Where(p => p.IsTop).ToListAsync();
+            var bestSellerProducts = await context.Products.Where(p => p.IsBestSeller).ToListAsync();
+            var categories = await context.Categories.ToListAsync();
+            var cart = CustomSessionExtensions.GetSessionData<List<Item>>(HttpContext.Session, "cart");
+
+            ViewBag.topProducts = topProducts;
+            ViewBag.bestSellerProducts = bestSellerProducts;
+            ViewBag.categories = categories;
+            ViewBag.cart = cart;
+
             return View();
         }
 
-        // Product detail
+        // Product detail - GET
         [Route("/{alias}")]
         public async Task<IActionResult> ProductDetail(string alias)
         {
-            return View();
-        }
+            var currentProduct = await context.Products.SingleAsync(p => p.Alias == alias);
+            var categories = await context.Categories.ToListAsync();
 
-        // ---------------------------------ADMIN
-        // products - GET
-        [Route("admin/manage-products")]
-        [HttpGet]
-        public async Task<IActionResult> Products(string SearchText = "", int page = 1)
-        {
-            return View();
-        }
+            ViewBag.currentProduct = currentProduct;
+            ViewBag.categories = categories;
 
-        // Add product - GET
-        [Route("admin/manage-products/add")]
-        [HttpGet]
-        public async Task<IActionResult> AddProduct()
-        {
             return View();
-        }
-
-        // Update product - GET
-        [Route("admin/manage-products/update/{id}")]
-        [HttpGet]
-        public async Task<IActionResult> UpdateProduct(int id)
-        {
-            return View();
-        }
-
-        // Product - DELETE
-        [Route("admin/manage-products/delete/${id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
-        {
-            return RedirectToAction("products", "product");
         }
     }
 }

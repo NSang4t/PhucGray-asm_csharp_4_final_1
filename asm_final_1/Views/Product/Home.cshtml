@@ -3,6 +3,11 @@
     Layout = "_Layout";
 }
 
+@{
+    var topProducts = ViewBag.topProducts as List<Product>;
+    var bestSellerProducts = ViewBag.bestSellerProducts as List<Product>;
+}
+
 <div class="home-page">
     <div id="hero_banners" class="carousel slide" data-ride="carousel" data-interval="4000" pause="true">
         <ol class="carousel-indicators">
@@ -38,39 +43,39 @@
         <div class="section__title">Sản phẩm nổi bật</div>
 
         <div class="home__products">
-            @*@foreach (Product product in topProducts)
-                {
-                    <a class="product" asp-controller="product" asp-action="productDetail" asp-route-alias="@product.Alias">
-                        <img class="product__img" src="./images/@product.Image" alt="afjawf" />
-                        <div class="product__name">@product.Name</div>
+            @foreach (Product product in topProducts)
+            {
+                <a class="product" asp-controller="product" asp-action="productDetail" asp-route-alias="@product.Alias">
+                    <img class="product__img" src="./images/products/@product.Image" alt="afjawf" />
+                    <div class="product__name">@product.Name</div>
 
-                        <div class="product__old-price">
-                            @if (product.HotPrice != null)
-                            {
-                                <span>@product.Price.ToString("0,000") đ</span>
-                            }
+                    <div class="product__old-price">
+                        @if (product.HotPrice != null)
+                        {
+                            <span>@product.Price.ToString("0,000") đ</span>
+                        }
 
-                            @if (product.IsFreeShip == true)
-                            {
-                                <div>
-                                    <i class="bi bi-truck"></i>
-                                    <span>Free</span>
-                                </div>
-                            }
-                        </div>
-                        <div class="product__price">
-                            @if (product.HotPrice != null)
-                            {
-                                @product.HotPrice?.ToString("0,000")
-                            }
-                            else
-                            {
-                                @product.Price.ToString("0,000")
-                            }
-                            đ
-                        </div>
-                    </a>
-                }*@
+                        @if (product.IsFreeShip == true)
+                        {
+                            <div>
+                                <i class="bi bi-truck"></i>
+                                <span>Free</span>
+                            </div>
+                        }
+                    </div>
+                    <div class="product__price">
+                        @if (product.HotPrice != null)
+                        {
+                            @product.HotPrice?.ToString("0,000")
+                        }
+                        else
+                        {
+                            @product.Price.ToString("0,000")
+                        }
+                        đ
+                    </div>
+                </a>
+            }
         </div>
     </section>
 
@@ -78,38 +83,38 @@
         <div class="section__title">Bán chạy</div>
 
         <div class="home__products">
-            @*@foreach (Product product in bestSellerProducts)
-                {
-                    <a class="product" asp-controller="product" asp-action="productDetail" asp-route-alias="@product.Alias">
-                        <img class="product__img" src="./images/@product.Image" alt="afjawf" />
-                        <div class="product__name">@product.Name</div>
-                        <div class="product__old-price">
-                            @if (product.HotPrice != null)
-                            {
-                                <span>@product.Price.ToString("0,000")</span>
-                            }
+            @foreach (Product product in bestSellerProducts)
+            {
+                <a class="product" asp-controller="product" asp-action="productDetail" asp-route-alias="@product.Alias">
+                    <img class="product__img" src="./images/products/@product.Image" alt="afjawf" />
+                    <div class="product__name">@product.Name</div>
+                    <div class="product__old-price">
+                        @if (product.HotPrice != null)
+                        {
+                            <span>@product.Price.ToString("0,000")</span>
+                        }
 
-                            @if (product.IsFreeShip == true)
-                            {
-                                <div>
-                                    <i class="bi bi-truck"></i>
-                                    <span>Free</span>
-                                </div>
-                            }
-                        </div>
-                        <div class="product__price">
-                            @if (product.HotPrice != null)
-                            {
-                                @product.HotPrice?.ToString("0,000")
-                            }
-                            else
-                            {
-                                @product.Price.ToString("0,000")
-                            }
-                            đ
-                        </div>
-                    </a>
-                }*@
+                        @if (product.IsFreeShip == true)
+                        {
+                            <div>
+                                <i class="bi bi-truck"></i>
+                                <span>Free</span>
+                            </div>
+                        }
+                    </div>
+                    <div class="product__price">
+                        @if (product.HotPrice != null)
+                        {
+                            @product.HotPrice?.ToString("0,000")
+                        }
+                        else
+                        {
+                            @product.Price.ToString("0,000")
+                        }
+                        đ
+                    </div>
+                </a>
+            }
         </div>
     </section>
 </div>
