@@ -1,0 +1,111 @@
+﻿/*-----------------------------------------------banners------------------------------*/
+
+.home-page .carousel button {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    border: none;
+    outline: none;
+    background: #000;
+    opacity: 0.1;
+}
+
+.home-page .carousel button:hover {
+    opacity: 0.8;
+}
+
+.home-page .carousel .button__prev {
+    left: 0;
+}
+
+.home-page .carousel .button__next {
+    right: 0;
+}
+
+.home-page .carousel-indicators li {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+}
+
+.home-page .carousel-indicators .active {
+    background-color: var(--blue);
+}
+
+/*--------------------------------products------------------*/
+
+.home-page section {
+    background: #fff;
+    margin-bottom: 40px;
+}
+
+.home-page .section__title {
+    padding: 20px 0 20px 20px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.home-page .home__products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.home-page .home__products .product {
+    overflow: hidden;
+    padding-bottom: 15px;
+    padding-inline: 20px;
+    background: #fff;
+
+    border: 1px solid #f2f2f2;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.home-page .home__products .product:hover {
+    border: 1px solid var(--blue);
+}
+
+.home-page .home__products .product__img {
+    width: 80%;
+    align-self: center;
+}
+
+
+.home-page .home__products .product__img:hover {
+    transform: scale(1.2);
+    transition-duration: 0.7s;
+}
+
+.home-page .product__name {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.home-page .home__products .product__old-price {
+    color: #808080;
+
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+}
+
+.home-page .home__products .product__old-price > span {
+    text-decoration: line-through;
+    font-style: italic;
+}
+
+.home-page .home__products .product__old-price i {
+    font-size: 25px;
+    color: #41b956;
+}
+
+.home-page .home__products .product__price {
+    font-weight: bold;
+    color: var(--blue);
+    font-size: 18px;
+}
+

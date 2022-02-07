@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/adminLayout.css" />
+    <link rel="stylesheet" href="~/css/adminGeneral.css" />
+</head>
+<body>
+    <nav class="admin-nav">
+        <a class="nav__brand" asp-controller="admin" asp-action="index">
+            <i class="bi bi-box-seam"></i>
+            <span>GrayBox</span>
+        </a>
+        <div class="nav__right">
+            <img class="nav__avatar" src="https://st3.depositphotos.com/1767687/16607/v/600/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg" alt="Alternate Text" />
+            <div>admin</div>
+
+            <div class="nav__dropdown">
+                <a class="btn btn-secondary" asp-controller="account" asp-action="signOut">Đăng xuất</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-body">
+        <div class="admin__sidebar">
+            <a class="sidebar__item" asp-controller="product" asp-action="products">
+                <i class="bi bi-laptop"></i>
+                <span class="sidebar_item-name">Quản lí sản phẩm</span>
+            </a>
+
+            <a class="sidebar__item" asp-controller="admin" asp-action="users">
+                <i class="bi bi-file-person"></i>
+                <span class="sidebar_item-name">Quản lí người dùng</span>
+            </a>
+        </div>
+
+        <div class="p-4 flex-grow-1">
+            @RenderBody()
+        </div>
+    </div>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

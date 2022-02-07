@@ -1,0 +1,95 @@
+﻿:root {
+    --light-blue: #bedff963;
+    --blue: #2fa3ef;
+    --gray: #ebebeb;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-nav {
+    padding: 20px 40px;
+
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+
+    background: var(--blue);
+    color: #fff;
+}
+
+.admin-nav .nav__brand {
+    color: #fff;
+    font-size: 20px;
+}
+
+.admin-nav .nav__brand:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.admin-nav .nav__avatar {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.admin-nav .nav__right {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.admin-nav .nav__right:hover .nav__dropdown {
+    display: block;
+}
+
+.admin-nav .nav__dropdown {
+    display: none;
+
+    position: absolute;
+    left: -50%;
+    top: 100%;
+}
+/*-------------------------------------------body------------------------*/
+
+.admin-body {
+    flex: 1;
+    display: flex;
+    position: relative;
+}
+
+.admin__sidebar {
+    padding-top: 10px;
+    border-right: 2px solid #efefef;
+}
+
+.admin__sidebar:hover .sidebar_item-name {
+    display: initial;
+}
+
+.sidebar__item {
+    padding: 10px 20px;
+
+    display: block;
+
+    font-size: 18px;
+    text-decoration: none;
+    color: #000;
+
+    cursor: pointer;
+}
+
+.sidebar__item:hover {
+    text-decoration: none;
+    color: #000;
+    background: var(--light-blue);
+}
+
+.sidebar_item-name {
+    display: none;
+}
