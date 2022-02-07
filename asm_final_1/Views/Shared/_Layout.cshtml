@@ -31,10 +31,18 @@
             <div>Danh mục sản phẩm</div>
 
             <div class="categories">
-                @foreach (Category category in categories)
-                {
-                    <div class="categories__item">@category.Name</div>
-                }
+                @if (categories != null)
+                 {
+                    @foreach (Category category in categories)
+                     {
+                        <a class="categories__item"
+                           style="display: block;"
+                           asp-controller="product" asp-action="filteredProducts"
+                           asp-route-categoryId="@category.Id">
+                            @category.Name
+                        </a>
+                     }
+                 }
             </div>
         </div>
 

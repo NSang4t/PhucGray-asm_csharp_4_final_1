@@ -33,7 +33,10 @@ namespace asm_final_1.Controllers
         private int CheckIsProductExists(int id)
         {
             List<Item> cart = CustomSessionExtensions.GetSessionData<List<Item>>(HttpContext.Session, "cart");
-            for (int i = 0; i < cart.Count; i++)
+
+            if (cart == null) return -1;
+
+            for (int i = 0; i < cart.Count(); i++)
             {
                 if (cart[i].Product.Id.Equals(id))
                 {
@@ -77,9 +80,14 @@ namespace asm_final_1.Controllers
         public IActionResult Remove(int id)
         {
             List<Item> cart = CustomSessionExtensions.GetSessionData<List<Item>>(HttpContext.Session, "cart");
-            int index = CheckIsProductExists(id);
-            cart.RemoveAt(index);
-            CustomSessionExtensions.SetSessionData(HttpContext.Session, "cart", cart);
+            
+            if(cart != null)
+            {
+                int index = CheckIsProductExists(id);
+                cart.RemoveAt(index);
+                CustomSessionExtensions.SetSessionData(HttpContext.Session, "cart", cart);
+            }
+
             return RedirectToAction("Index");
         }
 

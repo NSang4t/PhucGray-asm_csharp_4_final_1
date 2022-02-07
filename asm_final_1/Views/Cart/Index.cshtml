@@ -11,7 +11,7 @@
 <div class="cart__wrapper">
     <h4>Giỏ hàng</h4>
 
-    @if (cart != null && cart?.Count() > 0 && total != null)
+    @if (cart != null && cart.Count() > 0 && total != null)
     {
         <div class="cart__content">
             <div class="cart__products">
@@ -74,7 +74,7 @@
                     </div>*@
             </div>
 
-            <div class="cart__payment">
+            <div class="cart__payment" style="height: fit-content;">
                 <h4>Thanh toán</h4>
                 <div class="d-flex justify-content-between">
                     <div>Tạm tính</div>

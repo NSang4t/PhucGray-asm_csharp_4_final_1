@@ -45,10 +45,37 @@ namespace asm_final_1.Controllers
         {
             var currentProduct = await context.Products.SingleAsync(p => p.Alias == alias);
             var categories = await context.Categories.ToListAsync();
+            var cart = CustomSessionExtensions.GetSessionData<List<Item>>(HttpContext.Session, "cart");
 
             ViewBag.currentProduct = currentProduct;
             ViewBag.categories = categories;
+            ViewBag.cart = cart;
+            return View();
+        }
 
+        // Product detail - GET
+        [Route("/filter/{categoryId}")]
+        public async Task<IActionResult> FilteredProducts(int categoryId)
+        {
+            var filteredProducts = await context.Products.Where(p => p.CategoryId == categoryId).ToListAsync();
+            var categoryNames = await context.Categories.Where(c => c.Id == categoryId).Select(c => c.Name).ToListAsync();
+            var cart = CustomSessionExtensions.GetSessionData<List<Item>>(HttpContext.Session, "cart");
+            var categories = await context.Categories.ToListAsync();
+
+            if (filteredProducts != null && categoryNames != null)
+            {
+                ViewBag.filteredProducts = filteredProducts;
+                ViewBag.categoryName = categoryNames[0];
+                ViewBag.cart = cart;
+                ViewBag.categories = categories;
+            }
+            //var currentProduct = await context.Products.SingleAsync(p => p.Alias == alias);
+            //var categories = await context.Categories.ToListAsync();
+            //var cart = CustomSessionExtensions.GetSessionData<List<Item>>(HttpContext.Session, "cart");
+
+            //ViewBag.currentProduct = currentProduct;
+            //ViewBag.categories = categories;
+            //ViewBag.cart = cart;
             return View();
         }
 
