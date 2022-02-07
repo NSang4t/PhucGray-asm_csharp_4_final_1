@@ -1,0 +1,95 @@
+﻿@using asm_final_1.Models.OthersModels 
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Quản lí sản phẩm";
+}
+
+@{
+    Pager pager = new Pager();
+
+    if(ViewBag.pager != null) {
+        pager = ViewBag.pager;
+    }
+
+    var products = ViewBag.products as List<Product>;
+}
+
+<div>
+    <h3>Quản lí sản phẩm</h3>
+
+    <div class="my-4">
+        <a asp-controller="product" asp-action="addproduct">+ Thêm sản phẩm</a>
+    </div>
+
+    @if (ViewBag.pager != null)
+     {
+        <form class="admin__search" asp-controller="products" asp-action="products" method="get">
+            <input type="search" placeholder="Nhập từ khoá cần tìm" value="@ViewData["GetProducts"]" name="SearchText" />
+            <button>
+                <i class="bi bi-search"></i>
+            </button>
+
+            <a style="margin-left: 20px; align-self: center;" asp-controller="product">--Hiển thị toàn bộ--</a>
+        </form>
+     }
+
+    @if (pager.TotalPages > 0)
+    {
+        <table>
+            <tr>
+                <th>Mã</th>
+                <th>Ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Hành động</th>
+            </tr>
+
+            @foreach (Product product in products)
+            {
+                <tr style="text-align: center;">
+                    <td style="width: 40px;">@product.Id</td>
+                    <td>
+                        <img width="60" src="/images/products/@product.Image" alt="@product.Name" />
+                    </td>
+                    <td style="max-width: 350px; text-align: left;">@product.Name</td>
+                    <td>@product.Price.ToString("0,000") đ</td>
+                    <td>
+                        <a class="btn btn-info" asp-controller="product" asp-action="updateProduct" asp-route-id="@product.Id">Sửa</a>
+                        <a class="btn btn-secondary" asp-controller="product" asp-action="deleteProduct" asp-route-id="@product.Id">Xoá</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+
+    @if (pager.TotalPages == 0)
+    {
+        <div class="text-center mt-4">Không có sản phẩm nào được tìm thấy</div>
+    }
+
+
+
+    @if (pager.TotalPages > 0)
+    {
+        <ul class="pagination mt-4 d-flex justify-content-center">
+            @if (pager.CurrentPage > 1)
+            {
+                <li class="page-item"><a class="page-link" asp-controller="product" asp-action="products" asp-route-page="@(pager.CurrentPage - 1)">Trang trước</a></li>
+            }
+
+
+            @for (int page = pager.StartPage; page <= pager.EndPage; page++)
+            {
+                <li class="page-item @(page == pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="product" asp-action="products" asp-route-page="@(page)">@(page)</a>
+                </li>
+            }
+
+            @if (pager.CurrentPage >= 1 && pager.CurrentPage < pager.TotalPages)
+            {
+                <li class="page-item"><a class="page-link" asp-controller="product" asp-action="products" asp-route-page="@(pager.CurrentPage + 1)">Trang sau</a></li>
+            }
+        </ul>
+    }
+</div>
