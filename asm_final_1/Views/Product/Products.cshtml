@@ -1,4 +1,4 @@
-﻿@using asm_final_1.Models.OthersModels 
+﻿@using asm_final_1.Models.OthersModels
 
 @{
     Layout = "_AdminLayout";
@@ -8,7 +8,8 @@
 @{
     Pager pager = new Pager();
 
-    if(ViewBag.pager != null) {
+    if (ViewBag.pager != null)
+    {
         pager = ViewBag.pager;
     }
 
@@ -23,7 +24,7 @@
     </div>
 
     @if (ViewBag.pager != null)
-     {
+    {
         <form class="admin__search" asp-controller="products" asp-action="products" method="get">
             <input type="search" placeholder="Nhập từ khoá cần tìm" value="@ViewData["GetProducts"]" name="SearchText" />
             <button>
@@ -32,7 +33,7 @@
 
             <a style="margin-left: 20px; align-self: center;" asp-controller="product">--Hiển thị toàn bộ--</a>
         </form>
-     }
+    }
 
     @if (pager.TotalPages > 0)
     {
@@ -56,7 +57,7 @@
                     <td>@product.Price.ToString("0,000") đ</td>
                     <td>
                         <a class="btn btn-info" asp-controller="product" asp-action="updateProduct" asp-route-id="@product.Id">Sửa</a>
-                        <a class="btn btn-secondary" asp-controller="product" asp-action="deleteProduct" asp-route-id="@product.Id">Xoá</a>
+                        <a class="btn btn-secondary" asp-controller="product" asp-action="deleteProduct" asp-route-id="@product.Id" onclick="return confirm('Bạn có chắc chắn muốn xoá sản phẩm @product.Name ?');">Xoá</a>
                     </td>
                 </tr>
             }

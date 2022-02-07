@@ -107,14 +107,14 @@ namespace asm_final_1.Controllers
         [HttpPost]
         public async Task<IActionResult> AddProduct(Product product)
         {
-            var existsName = await context.Products.Where(p => p.Name == product.Name).ToListAsync();
+            var existsName = await context.Products.SingleOrDefaultAsync(p => p.Name == product.Name);
 
-            if (existsName[0] != null)
+            if (existsName != null)
             {
                 TempData["add-product__alert"] = AlertExtensions.ShowAlert(Alerts.Danger, "Tên sản phẩm đã tồn tại");
             }
 
-            if (ModelState.IsValid)
+            else if (ModelState.IsValid)
             {
                 string imgPath = FileExtension.UploadFile(product.ImageFile, webHostEnvironment);
 
@@ -173,14 +173,13 @@ namespace asm_final_1.Controllers
         public async Task<IActionResult> UpdateProduct(int id, Product product)
         {
             var currentProduct = await context.Products.FindAsync(id);
-            var existsName = await context.Products.SingleAsync(p => p.Name == product.Name);
+            var existsName = await context.Products.SingleOrDefaultAsync(p => p.Name == product.Name);
 
             if (product.Name != currentProduct.Name && existsName != null)
             {
                 TempData["update-product__alert"] = AlertExtensions.ShowAlert(Alerts.Danger, "Tên sản phẩm đã tồn tại");
             }
-
-            if (ModelState.IsValid && currentProduct != null)
+            else if (ModelState.IsValid && currentProduct != null)
             {
                 string imgPath = product.ImageFile != null
                     ? FileExtension.UploadFile(product.ImageFile, webHostEnvironment)

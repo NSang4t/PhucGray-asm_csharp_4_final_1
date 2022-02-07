@@ -16,7 +16,7 @@ namespace asm_final_1.Utils
 
             if (ImageFile != null)
             {
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images/products");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + ImageFile.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
