@@ -9,6 +9,10 @@
 }
 
 <div class="cart__wrapper">
+    <div class="text-center">
+        @Html.Raw(TempData["checkout__alert--success"])
+    </div>
+
     <h4>Giỏ hàng</h4>
 
     @if (cart != null && cart.Count() > 0 && total != null)
@@ -87,7 +91,7 @@
                 <div class="text-right">(Đã bao gồm VAT)</div>
 
                 <div class="text-center">
-                    <button>Thanh toán</button>
+                    <a class="btn btn-primary w-75 mt-4" asp-controller="cart" asp-action="checkout" asp-route-isSignedIn="@User.Identity.IsAuthenticated">Thanh toán</a>
                 </div>
             </div>
         </div>

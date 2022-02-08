@@ -1,11 +1,13 @@
 ﻿using asm_final_1.Models;
 using asm_final_1.Models.OthersModels;
 using asm_final_1.Utils;
+using asm_rewrite.Enums;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace asm_final_1.Controllers
 {
@@ -105,6 +107,28 @@ namespace asm_final_1.Controllers
             }
 
             return RedirectToAction("index");
+        }
+
+        [Route("cart/checkout/{isSignedIn}")]
+        public IActionResult Checkout(bool isSignedIn)
+        {
+            if(isSignedIn)
+            {
+                List<Item> cart = CustomSessionExtensions.GetSessionData<List<Item>>(HttpContext.Session, "cart");
+
+                Console.WriteLine("run");
+
+                if(cart != null)
+                {
+                    CustomSessionExtensions.SetSessionData(HttpContext.Session, "cart", null);
+                    TempData["checkout__alert--success"] = AlertExtensions.ShowAlert(Alerts.Success, "Thanh toán thành công");
+                    return RedirectToAction("index");
+                }
+            }
+
+            TempData["checkout__alert--error"] = "Vui lòng đăng nhập để thanh toán";
+
+            return RedirectToAction("signIn", "account");
         }
     }
 }

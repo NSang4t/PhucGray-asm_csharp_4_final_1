@@ -15,6 +15,13 @@
     </div>
 }
 
+@if (TempData["checkout__alert--error"] != null)
+{
+    <div class="alert alert-primary" role="alert">
+        @TempData["checkout__alert--error"]
+    </div>
+}
+
 <div>
     @Html.Raw(TempData["sign-up__alert--success"])
 </div>
