@@ -62,17 +62,18 @@ namespace asm_final_1.Controllers
                         //ExpiresUtc = DateTime.UtcNow.AddMinutes(1)
                     });
 
-                if (userRole.Name.ToLower() == "admin")
+                if (userRole.Id == 1) // admin
                 {
                     //
                     return RedirectToAction("index", "admin");
                 }
-                else if (userRole.Name.ToLower() == "employee")
+                else if (userRole.Id == 2) // employee
                 {
                     //
                     return RedirectToAction("index", "admin");
                 }
 
+                // customer
                 return RedirectToAction("home", "product");
             }
 
