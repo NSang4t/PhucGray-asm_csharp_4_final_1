@@ -76,6 +76,33 @@ namespace asm_final_1.Controllers
             return View();
         }
 
+        // Product detail - GET
+        [Route("/search")]
+        [HttpGet]
+        public async Task<IActionResult> SearchProduct(string keyword = "")
+        {
+            var products = await context.Products.ToListAsync();
+            var cart = CustomSessionExtensions.GetSessionData<List<Item>>(HttpContext.Session, "cart");
+            var categories = await context.Categories.ToListAsync();
+            //
+
+            if (keyword != null && keyword != "")
+            {
+                products = products.Where(p => p.Name.ToLower().Contains(keyword.ToLower())).ToList();
+            }
+            else
+            {
+                products = context.Products.ToList();
+            }
+
+            ViewBag.cart = cart;
+            ViewBag.categories = categories;
+            ViewBag.products = products;
+            ViewBag.keyword = keyword;
+
+            return View();
+        }
+
         // ------------------------------ADMIN----------------------
 
         // products - GET
@@ -84,7 +111,7 @@ namespace asm_final_1.Controllers
         [Authorize]
         public async Task<IActionResult> Products(string SearchText = "", int page = 1)
         {
-            List<Product> products = await context.Products.ToListAsync();
+            var products = await context.Products.ToListAsync();
             //
 
             if (SearchText != null && SearchText != "")

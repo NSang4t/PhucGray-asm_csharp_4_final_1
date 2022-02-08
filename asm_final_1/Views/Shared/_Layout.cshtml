@@ -46,12 +46,13 @@
             </div>
         </div>
 
-        <div class="nav__search">
-            <input type="text" placeholder="Nhập từ khoá cần tìm" />
+        <form class="nav__search" asp-controller="product" asp-action="searchProduct"
+              method="get">
+            <input type="text" placeholder="Nhập tên sản phẩm" name="keyword" />
             <button>
                 <i class="bi bi-search"></i>
             </button>
-        </div>
+        </form>
 
         <div class="nav__right">
             @if (User.Identity.IsAuthenticated)

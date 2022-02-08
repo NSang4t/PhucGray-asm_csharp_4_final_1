@@ -1,19 +1,19 @@
 ﻿@{
-    var filteredProducts = ViewBag.filteredProducts as List<Product>;
-    var categoryName = ViewBag.categoryName;
+    var products = ViewBag.products as List<Product>;
+    var keyword = ViewBag.keyword;
 
-    ViewData["Title"] = "Sản phẩm " + (categoryName != null ? categoryName : "");
+    ViewData["Title"] = "Tìm kiếm: " + (keyword ?? "");
     Layout = "_Layout";
 }
 
-@if (filteredProducts != null)
+@if (products != null)
 {
     <div class="home-page">
         <section>
-            <div class="section__title">Danh mục: @categoryName</div>
+            <div class="section__title">Tìm kiếm: @keyword</div>
 
             <div class="home__products">
-                @foreach (Product product in filteredProducts)
+                @foreach (Product product in products)
                 {
                     <a class="product" asp-controller="product" asp-action="productDetail" asp-route-alias="@product.Alias">
                         <img class="product__img" src="~/images/products/@product.Image" alt="afjawf" />

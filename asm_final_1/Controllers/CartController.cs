@@ -100,11 +100,14 @@ namespace asm_final_1.Controllers
 
             int index = CheckIsProductExists(id);
 
-            if (cart[index].Quantity > 1)
-            {
-                cart[index].Quantity--;
-                CustomSessionExtensions.SetSessionData(HttpContext.Session, "cart", cart);
-            }
+            var currentProduct = cart[index];
+
+            if (currentProduct.Quantity > 1) currentProduct.Quantity--;
+            else 
+                cart.Remove(currentProduct);
+            
+
+            CustomSessionExtensions.SetSessionData(HttpContext.Session, "cart", cart);
 
             return RedirectToAction("index");
         }

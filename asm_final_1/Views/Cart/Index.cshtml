@@ -20,14 +20,14 @@
         <div class="cart__content">
             <div class="cart__products">
                 @foreach (Item item in cart)
-                {
+                 {
                     <div class="cart__product mb-2">
                         <img src="./images/products/@item.Product.Image" alt="Alternate Text" width="70" />
                         <span>@item.Product.Name</span>
                         <div class="product__quantity">
-                            <a class="btn btn-light" asp-controller="cart" asp-action="decrease" asp-route-id="@item.Product.Id">-</a>
+                            <a class="btn btn-light border" asp-controller="cart" asp-action="decrease" asp-route-id="@item.Product.Id">-</a>
                             <div class="quantity">@item.Quantity</div>
-                            <a class="btn btn-light" asp-controller="cart" asp-action="buy" asp-route-id="@item.Product.Id">+</a>
+                            <a class="btn btn-light border" asp-controller="cart" asp-action="buy" asp-route-id="@item.Product.Id">+</a>
                         </div>
 
                         <div style="min-width: fit-content; margin: auto 0;">
@@ -50,32 +50,14 @@
                             </div>
                         </div>
 
-                        <a class="btn btn-link" asp-controller="cart" asp-action="remove" asp-route-id="@item.Product.Id">
+                        <a class="btn btn-link"
+                           style="color: #cacaca;"
+                           asp-controller="cart" asp-action="remove" asp-route-id="@item.Product.Id"
+                           onclick="return confirm('Bạn có chắc chắn muốn xoá sản phẩm @item.Product.Name');">
                             <i class="bi bi-trash" style="font-size: 20px;"></i>
                         </a>
                     </div>
-                }
-
-
-
-                @*<div class="cart__product">
-                        <img src="./images/p1.png" alt="Alternate Text" width="70" />
-                        <span>Laptop HP VICTUS 16-e0168AX 4R0U6PA ( 16.1" Full HD/ 144Hz/Ryzen 7 5800H/8GB/512GB SSD/NVIDIA GeForce RTX 3050Ti/Windows 11 Home SL/2.4kg)</span>
-                        <div class="product__quantity">
-                            <button>-</button>
-                            <div class="quantity">1</div>
-                            <button>+</button>
-                        </div>
-
-                        <div style="min-width: fit-content; margin: auto 0;">
-                            <div style="font-weight: bold; font-size: 18px;">28.990.000 đ</div>
-                            <div style="text-decoration: line-through;">29.990.000 đ</div>
-                        </div>
-
-                        <button class="btn btn-link">
-                            <i class="bi bi-trash" style="font-size: 20px;"></i>
-                        </button>
-                    </div>*@
+                 }
             </div>
 
             <div class="cart__payment" style="height: fit-content;">
@@ -91,7 +73,8 @@
                 <div class="text-right">(Đã bao gồm VAT)</div>
 
                 <div class="text-center">
-                    <a class="btn btn-primary w-75 mt-4" asp-controller="cart" asp-action="checkout" asp-route-isSignedIn="@User.Identity.IsAuthenticated">Thanh toán</a>
+                    <a class="btn btn-primary w-100 mt-4" style="height: 50px; display: grid; place-items: center;"
+                       asp-controller="cart" asp-action="checkout" asp-route-isSignedIn="@User.Identity.IsAuthenticated">Thanh toán</a>
                 </div>
             </div>
         </div>
