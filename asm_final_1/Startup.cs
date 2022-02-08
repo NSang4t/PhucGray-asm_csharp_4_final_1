@@ -41,6 +41,13 @@ namespace asm_final_1
                     config.Cookie.Name = "Grandmas.Cookie";
                     config.LoginPath = "/sign-in";
                 });
+
+            // Only accept: admin + employee
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("DenyCustomer", policy => 
+                    policy.RequireRole(new string[] { "1", "2" }));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

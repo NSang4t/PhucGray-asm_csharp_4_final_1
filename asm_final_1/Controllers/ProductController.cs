@@ -108,15 +108,15 @@ namespace asm_final_1.Controllers
         // products - GET
         [Route("admin/manage-products")]
         [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> Products(string SearchText = "", int page = 1)
+        [Authorize(Policy = "DenyCustomer")]
+        public async Task<IActionResult> Products(string keyword = "", int page = 1)
         {
             var products = await context.Products.ToListAsync();
             //
 
-            if (SearchText != null && SearchText != "")
+            if (keyword != null && keyword != "")
             {
-                products = products.Where(p => p.Name.ToLower().Contains(SearchText.ToLower())).ToList();
+                products = products.Where(p => p.Name.ToLower().Contains(keyword.ToLower())).ToList();
             }
             else
             {
@@ -138,6 +138,7 @@ namespace asm_final_1.Controllers
 
             ViewBag.products = data;
             ViewBag.pager = pager;
+            ViewBag.keyword = keyword;
 
             return View();
         }
@@ -145,7 +146,7 @@ namespace asm_final_1.Controllers
         // Add product - GET
         [Route("admin/manage-products/add")]
         [HttpGet]
-        [Authorize]
+        [Authorize(Policy = "DenyCustomer")]
         public async Task<IActionResult> AddProduct()
         {
             var categories = await context.Categories.ToListAsync();
@@ -158,7 +159,7 @@ namespace asm_final_1.Controllers
         // Add product - POST
         [Route("admin/manage-products/add")]
         [HttpPost]
-        [Authorize]
+        [Authorize(Policy = "DenyCustomer")]
         public async Task<IActionResult> AddProduct(Product product)
         {
             var existsName = await context.Products.SingleOrDefaultAsync(p => p.Name == product.Name);
@@ -208,7 +209,7 @@ namespace asm_final_1.Controllers
         // Update product - GET
         [Route("admin/manage-products/update/{id}")]
         [HttpGet]
-        [Authorize]
+        [Authorize(Policy = "DenyCustomer")]
         public async Task<IActionResult> UpdateProduct(int id)
         {
             var currentProduct = await context.Products.FindAsync(id);
@@ -225,7 +226,7 @@ namespace asm_final_1.Controllers
         // Update product - POST
         [Route("admin/manage-products/update/{id}")]
         [HttpPost]
-        [Authorize]
+        [Authorize(Policy = "DenyCustomer")]
         public async Task<IActionResult> UpdateProduct(int id, Product product)
         {
             var currentProduct = await context.Products.FindAsync(id);
@@ -275,7 +276,7 @@ namespace asm_final_1.Controllers
 
         // Product - DELETE
         [Route("admin/manage-products/delete/${id}")]
-        [Authorize]
+        [Authorize(Policy = "DenyCustomer")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var product = await context.Products.FindAsync(id);

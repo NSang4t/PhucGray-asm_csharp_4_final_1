@@ -27,6 +27,7 @@ namespace asm_final_1.Controllers
         // USERS - GET
         [Route("admin/manage-users")]
         [HttpGet]
+        [Authorize(Policy = "DenyCustomer")]
 
         public async Task<IActionResult> Users(string SearchText = "", int page = 1)
         {
@@ -68,7 +69,7 @@ namespace asm_final_1.Controllers
         // ADD USER - GET
         [Route("admin/manage-users/add")]
         [HttpGet]
-        [Authorize]
+        [Authorize(Policy = "DenyCustomer")]
         public async Task<IActionResult> AddUser()
         {
             var roles = await context.Roles.ToListAsync();
@@ -81,7 +82,7 @@ namespace asm_final_1.Controllers
         // ADD USER - POST
         [Route("admin/manage-users/add")]
         [HttpPost]
-        [Authorize]
+        [Authorize(Policy = "DenyCustomer")]
         public async Task<IActionResult> AddUser(User user)
         {
             var existsPhone = await context.Users.SingleOrDefaultAsync(u => u.Phone == user.Phone);
@@ -126,7 +127,7 @@ namespace asm_final_1.Controllers
         // UPDATE USER - GET
         [Route("admin/manage-users/update/{id}")]
         [HttpGet]
-        [Authorize]
+        [Authorize(Policy = "DenyCustomer")]
         public async Task<IActionResult> UpdateUser(int id)
         {
             var currentUser = await context.Users.FindAsync(id);
@@ -141,7 +142,7 @@ namespace asm_final_1.Controllers
         // UPDATE USER - POST
         [Route("admin/manage-users/update/{id}")]
         [HttpPost]
-        [Authorize]
+        [Authorize(Policy = "DenyCustomer")]
         public async Task<IActionResult> UpdateUser(int id, User user)
         {
             var currentUser = await context.Users.FindAsync(id);
@@ -184,7 +185,7 @@ namespace asm_final_1.Controllers
 
         // USER - DELETE
         [Route("admin/manage-users/delete/${id}")]
-        [Authorize]
+        [Authorize(Policy = "DenyCustomer")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await context.Users.FindAsync(id);

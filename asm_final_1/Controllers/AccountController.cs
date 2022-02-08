@@ -50,11 +50,11 @@ namespace asm_final_1.Controllers
 
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.NameIdentifier, existsEmail.Id.ToString()),
-                    new Claim(ClaimTypes.Email, existsEmail.Email),
-                    new Claim(ClaimTypes.MobilePhone, existsEmail.Phone),
-                    new Claim(ClaimTypes.Name, existsEmail.FirstName),
-                    new Claim(ClaimTypes.Role, existsEmail.RoleId.ToString())
+                    new Claim(ClaimTypes.NameIdentifier, existsEmail.Id.ToString(), ClaimValueTypes.String),
+                    new Claim(ClaimTypes.Email, existsEmail.Email, ClaimValueTypes.String),
+                    new Claim(ClaimTypes.MobilePhone, existsEmail.Phone, ClaimValueTypes.String),
+                    new Claim(ClaimTypes.Name, existsEmail.FirstName, ClaimValueTypes.String),
+                    new Claim(ClaimTypes.Role, existsEmail.RoleId.ToString(), ClaimValueTypes.Integer)
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, "cookie");

@@ -19,7 +19,7 @@
 
     if (User.Identity.IsAuthenticated)
     {
-        currentUserId = User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value[0].ToString();
+        currentUserId = User.Claims.First(c => c.Type.Contains("nameidentifier")).Value;
     }
 }
 

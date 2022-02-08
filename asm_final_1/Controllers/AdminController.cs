@@ -10,7 +10,7 @@ namespace asm_final_1.Controllers
     public class AdminController : Controller
     {
         [Route("admin")]
-        [Authorize]
+        [Authorize(Policy = "DenyCustomer")]
         public IActionResult Index()
         {
             return View();

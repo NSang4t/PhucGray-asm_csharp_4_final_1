@@ -26,7 +26,7 @@
     @if (ViewBag.pager != null)
     {
         <form class="admin__search" asp-controller="products" asp-action="products" method="get">
-            <input type="search" placeholder="Nhập từ khoá cần tìm" value="@ViewData["GetProducts"]" name="SearchText" />
+            <input type="search" placeholder="Nhập từ khoá cần tìm" name="keyword" />
             <button>
                 <i class="bi bi-search"></i>
             </button>
