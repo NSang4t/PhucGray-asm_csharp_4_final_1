@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,7 +20,6 @@ namespace asm_final_1.Models
 
         public string LastName { get; set; }
 
-        [StringLength(maximumLength: 255, MinimumLength = 10, ErrorMessage = "Nhập địa chỉ từ 10 - 255 kí tự")]
         public string Address { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập số điện thoại")]
@@ -26,5 +27,10 @@ namespace asm_final_1.Models
         public string Phone { get; set; }
 
         public string Image { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        [NotMapped]
+        public IFormFile ImageFile { get; set; }
     }
 }

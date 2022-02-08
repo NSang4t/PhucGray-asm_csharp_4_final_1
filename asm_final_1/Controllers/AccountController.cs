@@ -36,6 +36,12 @@ namespace asm_final_1.Controllers
         {
             var existsEmail = await context.Users.SingleOrDefaultAsync(u => u.Email == user.Email);
 
+            if (existsEmail.IsDeleted == true)
+            {
+                TempData["sign-in__alert--danger"] = AlertExtensions.ShowAlert(Alerts.Danger, "Tài khoản của bạn không thể truy cập");
+                return View(user);
+            }
+
             if (ModelState.IsValid && existsEmail != null
                 && user.Password == existsEmail.Password)
             {
@@ -44,9 +50,11 @@ namespace asm_final_1.Controllers
 
                 var claims = new List<Claim>
                 {
+                    new Claim(ClaimTypes.NameIdentifier, existsEmail.Id.ToString()),
                     new Claim(ClaimTypes.Email, existsEmail.Email),
                     new Claim(ClaimTypes.MobilePhone, existsEmail.Phone),
                     new Claim(ClaimTypes.Name, existsEmail.FirstName),
+                    new Claim(ClaimTypes.Role, existsEmail.RoleId.ToString())
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, "cookie");
@@ -77,7 +85,7 @@ namespace asm_final_1.Controllers
                 return RedirectToAction("home", "product");
             }
 
-            ModelState.TryAddModelError("CustomSignInError", "Email hoặc mật khẩu không chính xác");
+            TempData["sign-in__alert--danger"] = AlertExtensions.ShowAlert(Alerts.Danger, "Email hoặc mật khẩu không chính xác");
             return View(user);
         }
 
@@ -95,13 +103,13 @@ namespace asm_final_1.Controllers
             var existsPhone = await context.Users.SingleOrDefaultAsync(u => u.Phone == user.Phone);
             var existsEmail = await context.Users.SingleOrDefaultAsync(u => u.Email == user.Email);
 
-            if (existsPhone != null)
+            if (existsEmail != null)
             {
-                ModelState.TryAddModelError("CustomSignUpError", "Số điện thoại đã tồn tại");
+                TempData["sign-up__alert--danger"] = AlertExtensions.ShowAlert(Alerts.Success, "Email đã tồn tại");
             }
-            else if (existsEmail != null)
+            else if (existsPhone != null)
             {
-                ModelState.TryAddModelError("CustomSignUpError", "Email đã tồn tại");
+                TempData["sign-up__alert--danger"] = AlertExtensions.ShowAlert(Alerts.Success, "Số điện thoại đã tồn tại");
             }
             else if (ModelState.IsValid)
             {
@@ -114,7 +122,9 @@ namespace asm_final_1.Controllers
                     Phone = user.Phone,
                     Email = user.Email,
                     Password = user.Password,
-                    RoleId = customerRole[0].Id
+                    RoleId = customerRole[0].Id,
+                    Address = user.Address ?? null,
+                    Image = null
                 };
 
                 await context.Users.AddAsync(newUser);

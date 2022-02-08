@@ -6,15 +6,9 @@
 
 }
 
-@if (ViewData.ModelState["CustomSignUpError"] != null)
-{
-    <div class="alert alert-danger" role="alert">
-        @foreach (var item in ViewData.ModelState["CustomSignUpError"].Errors)
-        {
-            <div>@item.ErrorMessage</div>
-        }
-    </div>
-}
+<div>
+    @Html.Raw(TempData["sign-up__alert--danger"])
+</div>
 
 <a asp-controller="product" asp-action="home">Quay lại trang chủ</a>
 

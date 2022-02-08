@@ -124,14 +124,14 @@
                 <div>Trạng thái</div>
 
                 <div class="form-check-inline">
-                    <input type="radio" asp-for="IsDeleted" checked="@(currentProduct.IsDeleted != false)" value=false id="selling" />
+                    <input type="radio" asp-for="IsDeleted" checked="@(currentProduct.IsDeleted == false)" value=false id="selling" />
                     <label class="form-check-label ml-2" for="selling" value=false>
                         Bán
                     </label>
                 </div>
 
                 <div class="form-check-inline">
-                    <input type="radio" asp-for="IsDeleted" checked="@(currentProduct.IsDeleted != true)" id="not-sell" value=true />
+                    <input type="radio" asp-for="IsDeleted" checked="@(currentProduct.IsDeleted == true)" id="not-sell" value=true />
                     <label class="form-check-label ml-2" for="not-sell">
                         Không bán
                     </label>

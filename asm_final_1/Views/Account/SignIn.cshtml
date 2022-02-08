@@ -5,7 +5,7 @@
     Layout = "_AccountLayout";
 }
 
-@if (ViewData.ModelState["CustomSignInError"] != null)
+@*@if (ViewData.ModelState["CustomSignInError"] != null)
 {
     <div class="alert alert-danger" role="alert">
         @foreach (var item in ViewData.ModelState["CustomSignInError"].Errors)
@@ -13,7 +13,11 @@
             <div>@item.ErrorMessage</div>
         }
     </div>
-}
+}*@
+
+<div>
+    @Html.Raw(TempData["sign-in__alert--danger"])
+</div>
 
 @if (TempData["checkout__alert--error"] != null)
 {

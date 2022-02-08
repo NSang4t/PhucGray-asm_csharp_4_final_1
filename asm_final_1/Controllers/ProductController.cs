@@ -27,8 +27,10 @@ namespace asm_final_1.Controllers
         [Route("/")]
         public async Task<IActionResult> Home()
         {
-            var topProducts = await context.Products.Where(p => p.IsTop).ToListAsync();
-            var bestSellerProducts = await context.Products.Where(p => p.IsBestSeller).ToListAsync();
+            var products = await context.Products.Where(p => p.IsDeleted == false).ToListAsync();
+
+            var topProducts = products.FindAll(p => p.IsTop);
+            var bestSellerProducts = products.FindAll(p => p.IsBestSeller);
             var categories = await context.Categories.ToListAsync();
             var cart = CustomSessionExtensions.GetSessionData<List<Item>>(HttpContext.Session, "cart");
 
@@ -58,7 +60,7 @@ namespace asm_final_1.Controllers
         [Route("/filter/{categoryId}")]
         public async Task<IActionResult> FilteredProducts(int categoryId)
         {
-            var filteredProducts = await context.Products.Where(p => p.CategoryId == categoryId).ToListAsync();
+            var filteredProducts = await context.Products.Where(p => p.CategoryId == categoryId && p.IsDeleted == false).ToListAsync();
             var categoryNames = await context.Categories.Where(c => c.Id == categoryId).Select(c => c.Name).ToListAsync();
             var cart = CustomSessionExtensions.GetSessionData<List<Item>>(HttpContext.Session, "cart");
             var categories = await context.Categories.ToListAsync();

@@ -1,0 +1,154 @@
+﻿@model asm_final_1.Models.User
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Thêm người dùng";
+
+    var roles = ViewBag.roles as List<Role>;
+}
+
+<div class="mb-4">
+    <a asp-controller="user" asp-action="users">Quay lại</a>
+</div>
+
+<div>
+    @Html.Raw(TempData["add-user__alert--success"])
+</div>
+
+<div>
+    @Html.Raw(TempData["add-user__alert--danger"])
+</div>
+
+<form asp-controller="user" asp-action="addUser" method="post" enctype="multipart/form-data">
+    <div class="form-row">
+        <div class="col-md-4 mb-3">
+            <label asp-for="LastName">Họ</label>
+            <input type="text" class="form-control" asp-for="LastName">
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label asp-for="FirstName">Tên*</label>
+            <input type="text" class="form-control" asp-for="FirstName">
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label asp-for="RoleId">Quyền*</label>
+            <select class="custom-select mb-3" asp-for="RoleId">
+                <option selected hidden value=-1>Chọn quyền</option>
+                @if (roles != null)
+                {
+                    foreach (Role role in roles)
+                    {
+                        <option value="@role.Id">@role.Name</option>
+                    }
+                }
+            </select>
+            <span asp-validation-for="RoleId" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="col-md-4 mb-3">
+            <label asp-for="Email">Email*</label>
+            <input type="text" class="form-control" asp-for="Email">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label asp-for="Password">Mật khẩu*</label>
+            <input type="text" class="form-control" asp-for="Password">
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label asp-for="Phone">Số điện thoại*</label>
+            <input type="tel" class="form-control" asp-for="Phone">
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="col-md-4 mb-3">
+            <label asp-for="ImageFile">Hình ảnh*</label>
+
+            <div class="input-group">
+                <div class="custom-file">
+                    <input class="custom-file-input" asp-for="ImageFile" accept="image/*" id="ImageFile" onchange="readURL(this)">
+                    <label class="custom-file-label text-truncate" for="ImageFile">Chọn ảnh</label>
+
+                </div>
+            </div>
+            <img id="customFileImg" height="120" width="120" src="~/images/default-avatar.jpg" alt="Ảnh mặc định" />
+            <span asp-validation-for="ImageFile" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label asp-for="Address">Địa chỉ</label>
+            <textarea class="form-control" id="userAddress" rows="4" asp-for="Address"></textarea>
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div>Trạng thái</div>
+
+            <div class="form-check-inline">
+                <input type="radio" asp-for="IsDeleted" checked value=false id="active" />
+                <label class="form-check-label ml-2" for="active" value=false>
+                    Hoạt động
+                </label>
+            </div>
+
+            <div class="form-check-inline">
+                <input type="radio" asp-for="IsDeleted" id="inactive" value=true />
+                <label class="form-check-label ml-2" for="inactive">
+                    Không hoạt động
+                </label>
+            </div>
+
+            <span asp-validation-for="IsDeleted" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-primary w-50" style="padding: 10px 0; font-weight: bolder;" type="submit">Thêm</button>
+    </div>
+</form>
+
+@section scripts{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+        function readURL(input) {
+            var file = document.getElementById("ImageFile");
+            var fileName = file.value;
+
+            var idxDot = fileName.lastIndexOf(".") + 1;
+            var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+
+            if (extFile != "jpg" && extFile != "png") {
+                alert("Chỉ chọn ảnh jpg hoặc png");
+                file.value = null;
+                return;
+            }
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#customFileImg')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+}  

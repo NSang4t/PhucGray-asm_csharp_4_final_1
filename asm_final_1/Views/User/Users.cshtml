@@ -14,6 +14,13 @@
     }
 
     var users = ViewBag.users as List<User>;
+
+    string currentUserId = "";
+
+    if (User.Identity.IsAuthenticated)
+    {
+        currentUserId = User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value[0].ToString();
+    }
 }
 
 <div>
@@ -37,42 +44,48 @@
 
     @if (pager.TotalPages > 0)
     {
-<table>
-    <tr>
-        <th>Mã</th>
-        <th>Họ và tên</th>
-        <th>Ảnh</th>
-        <th>Điện thoại</th>
-        <th>Quyền</th>
-        <th>Hành động</th>
-    </tr>
-
-    @if (users != null)
-     {
-        @foreach (User user in users)
-         {
-            <tr style="text-align: center;">
-                <td style="width: 40px;">@user.Id</td>
-                <td style="max-width: 350px;">@user.LastName @user.FirstName</td>
-                <td>
-                    <img width="60" src="~/images/default-avatar.jpg" alt="@user.FirstName" />
-                </td>
-                <td>@user.Phone</td>
-
-                @{
-                    var roles = ViewBag.roles as List<Role>;
-                    var userRole = roles.Find(r => r.Id == user.RoleId);
-                }
-                <td>@userRole.Name</td>
-
-                <td>
-                    <a class="btn btn-info" asp-controller="product" asp-action="updateUser" asp-route-id="@user.Id">Sửa</a>
-                    <a class="btn btn-secondary" asp-controller="product" asp-action="deleteUser" asp-route-id="@user.Id" onclick="return confirm('Bạn có chắc chắn muốn xoá người dùng: @user.FirstName ?');">Xoá</a>
-                </td>
+        <table>
+            <tr>
+                <th>Mã</th>
+                <th>Họ và tên</th>
+                <th>Email</th>
+                <th>Ảnh</th>
+                <th>Điện thoại</th>
+                <th>Quyền</th>
+                <th>Hành động</th>
             </tr>
-         }
-     }
-</table>
+
+            @if (users != null)
+            {
+                @foreach (User user in users)
+                {
+                    <tr style="text-align: center;">
+                        <td style="width: 40px;">@user.Id</td>
+                        <td style="max-width: 350px;">@user.LastName @user.FirstName</td>
+                        <td>@user.Email</td>
+                        <td>
+                            <img width="60" src="~/images/default-avatar.jpg" alt="@user.FirstName" />
+                        </td>
+                        <td>@user.Phone</td>
+
+                        @{
+                            var roles = ViewBag.roles as List<Role>;
+                            var userRole = roles.Find(r => r.Id == user.RoleId);
+                        }
+                        <td>@userRole.Name</td>
+
+                        <td>
+                            <a class="btn btn-info" asp-controller="user" asp-action="updateUser" asp-route-id="@user.Id">Sửa</a>
+
+                            @if (user.Id.ToString() != currentUserId)
+                            {
+                                <a class="btn btn-secondary" asp-controller="user" asp-action="deleteUser" asp-route-id="@user.Id" onclick="return confirm('Bạn có chắc chắn muốn xoá người dùng: @user.FirstName ?');">Xoá</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
     }
 
     @if (pager.TotalPages == 0)
@@ -91,16 +104,16 @@
             }
 
             @for (int page = pager.StartPage; page <= pager.EndPage; page++)
-             {
+            {
                 <li class="page-item @(page == pager.CurrentPage ? "active" : "")">
                     <a class="page-link" asp-controller="user" asp-action="users" asp-route-page="@(page)">@(page)</a>
                 </li>
-             }
+            }
 
             @if (pager.CurrentPage >= 1 && pager.CurrentPage < pager.TotalPages)
-             {
+            {
                 <li class="page-item"><a class="page-link" asp-controller="product" asp-action="products" asp-route-page="@(pager.CurrentPage + 1)">Trang sau</a></li>
-             }
+            }
         </ul>
     }
 </div>

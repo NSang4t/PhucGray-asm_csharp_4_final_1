@@ -10,6 +10,16 @@
     <link rel="stylesheet" href="~/css/adminLayout.css" />
     <link rel="stylesheet" href="~/css/adminGeneral.css" />
 </head>
+
+@{
+    bool isAdmin = false;
+
+    if (User.Identity.IsAuthenticated)
+    {
+        isAdmin = User.IsInRole("1");
+    }
+}
+
 <body>
     <nav class="admin-nav">
         <a class="nav__brand" asp-controller="admin" asp-action="index">
@@ -18,7 +28,7 @@
         </a>
         <div class="nav__right">
             @if (User.Identity.IsAuthenticated)
-             {
+            {
                 <div class="item d-flex align-items-center">
                     <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
                         @User.Identity.Name
@@ -28,7 +38,7 @@
                         <a class="dropdown-item" asp-controller="account" asp-action="signOut">Đăng xuất</a>
                     </div>
                 </div>
-             }
+            }
 
             <div class="nav__dropdown">
                 <a class="btn btn-secondary" asp-controller="account" asp-action="signOut">Đăng xuất</a>
@@ -43,10 +53,13 @@
                 <span class="sidebar_item-name">Quản lí sản phẩm</span>
             </a>
 
-            <a class="sidebar__item" asp-controller="admin" asp-action="users">
-                <i class="bi bi-file-person"></i>
-                <span class="sidebar_item-name">Quản lí người dùng</span>
-            </a>
+            @if (isAdmin)
+             {
+                <a class="sidebar__item" asp-controller="user" asp-action="users">
+                    <i class="bi bi-file-person"></i>
+                    <span class="sidebar_item-name">Quản lí người dùng</span>
+                </a>
+             }
         </div>
 
         <div class="p-4 flex-grow-1">
