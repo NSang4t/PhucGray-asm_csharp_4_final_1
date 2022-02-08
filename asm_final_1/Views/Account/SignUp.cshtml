@@ -1,57 +1,59 @@
-﻿@{
+﻿@model asm_final_1.Models.User
+
+@{
     ViewData["Title"] = "Đăng ký";
     Layout = "_AccountLayout";
 
+}
+
+@if (ViewData.ModelState["CustomSignUpError"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @foreach (var item in ViewData.ModelState["CustomSignUpError"].Errors)
+        {
+            <div>@item.ErrorMessage</div>
+        }
+    </div>
 }
 
 <a asp-controller="product" asp-action="home">Quay lại trang chủ</a>
 
 <h2 class="text-center font-weight-bold mb-4">Đăng ký</h2>
 
-<form asp-controller="account" asp-action="signUp" method="post" enctype="multipart/form-data">
+<form class="needs-validation" novalidate asp-controller="account" asp-action="signUp" method="post" enctype="multipart/form-data">
     <div class="row">
         <div class="col">
             <div class="form-group">
-                @*<label asp-for="LastName">Họ và tên đệm</label>
+                <label asp-for="LastName">Họ và tên đệm</label>
                 <input type="text" class="form-control" asp-for="LastName" placeholder="Nhập họ và tên đệm">
-                <span asp-validation-for="LastName" class="text-danger"></span>*@
-                <label>Họ và tên đệm</label>
-                <input type="text" class="form-control" placeholder="Nhập họ và tên đệm">
+                <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
         </div>
         <div class="col">
             <div class="form-group">
-                @*<label asp-for="FirstName">Tên</label>
-                <input type="text" class="form-control" asp-for="FirstName" placeholder="Nhập tên">
-                <span asp-validation-for="FirstName" class="text-danger"></span>*@
-                <label>Tên</label>
-                <input type="text" class="form-control" placeholder="Nhập tên">
+                <label asp-for="FirstName">Tên</label>
+                <input type="text" class="form-control" asp-for="FirstName" placeholder="Nhập tên" autofocus>
+                <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
         </div>
     </div>
 
     <div class="form-group">
-        @*<label asp-for="Phone">Số điện thoại *</label>
+        <label asp-for="Phone">Số điện thoại *</label>
         <input type="tel" class="form-control" asp-for="Phone" placeholder="Nhập số điện thoại">
-        <span asp-validation-for="Phone" class="text-danger"></span>*@
-        <label>Số điện thoại *</label>
-        <input type="tel" class="form-control" placeholder="Nhập số điện thoại">
+        <span asp-validation-for="Phone" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        @*<label asp-for="Email">Email *</label>
+        <label asp-for="Email">Email *</label>
         <input type="email" class="form-control" asp-for="Email" placeholder="Nhập Email">
-        <span asp-validation-for="Email" class="text-danger"></span>*@
-        <label>Email *</label>
-        <input type="email" class="form-control" placeholder="Nhập Email">
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        @*<label asp-for="Password">Mật khẩu *</label>
+        <label asp-for="Password">Mật khẩu *</label>
         <input type="password" class="form-control" asp-for="Password" placeholder="Nhập mật khẩu">
-        <span asp-validation-for="Password" class="text-danger"></span>*@
-        <label>Mật khẩu *</label>
-        <input type="password" class="form-control" placeholder="Nhập mật khẩu">
+        <span asp-validation-for="Password" class="text-danger"></span>
     </div>
 
     <div class="text-center">

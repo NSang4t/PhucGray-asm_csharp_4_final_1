@@ -33,6 +33,14 @@ namespace asm_final_1
             //
             services.AddSession(options =>
             options.IdleTimeout = TimeSpan.FromMinutes(1));
+
+            // 
+            services.AddAuthentication("Grandmas.Cookie")
+                .AddCookie("Grandmas.Cookie", config =>
+                {
+                    config.Cookie.Name = "Grandmas.Cookie";
+                    config.LoginPath = "/sign-in";
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +59,8 @@ namespace asm_final_1
             app.UseRouting();
 
             app.UseSession();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

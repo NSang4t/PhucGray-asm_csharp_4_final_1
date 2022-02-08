@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace asm_final_1.Controllers
     public class AdminController : Controller
     {
         [Route("admin")]
-
+        [Authorize]
         public IActionResult Index()
         {
             return View();

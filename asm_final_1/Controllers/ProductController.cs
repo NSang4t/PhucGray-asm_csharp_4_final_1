@@ -2,6 +2,7 @@
 using asm_final_1.Models.OthersModels;
 using asm_final_1.Utils;
 using asm_rewrite.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -69,13 +70,7 @@ namespace asm_final_1.Controllers
                 ViewBag.cart = cart;
                 ViewBag.categories = categories;
             }
-            //var currentProduct = await context.Products.SingleAsync(p => p.Alias == alias);
-            //var categories = await context.Categories.ToListAsync();
-            //var cart = CustomSessionExtensions.GetSessionData<List<Item>>(HttpContext.Session, "cart");
 
-            //ViewBag.currentProduct = currentProduct;
-            //ViewBag.categories = categories;
-            //ViewBag.cart = cart;
             return View();
         }
 
@@ -84,6 +79,7 @@ namespace asm_final_1.Controllers
         // products - GET
         [Route("admin/manage-products")]
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Products(string SearchText = "", int page = 1)
         {
             List<Product> products = await context.Products.ToListAsync();
@@ -120,6 +116,7 @@ namespace asm_final_1.Controllers
         // Add product - GET
         [Route("admin/manage-products/add")]
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> AddProduct()
         {
             var categories = await context.Categories.ToListAsync();
@@ -132,6 +129,7 @@ namespace asm_final_1.Controllers
         // Add product - POST
         [Route("admin/manage-products/add")]
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddProduct(Product product)
         {
             var existsName = await context.Products.SingleOrDefaultAsync(p => p.Name == product.Name);
@@ -181,6 +179,7 @@ namespace asm_final_1.Controllers
         // Update product - GET
         [Route("admin/manage-products/update/{id}")]
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> UpdateProduct(int id)
         {
             var currentProduct = await context.Products.FindAsync(id);
@@ -197,6 +196,7 @@ namespace asm_final_1.Controllers
         // Update product - POST
         [Route("admin/manage-products/update/{id}")]
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> UpdateProduct(int id, Product product)
         {
             var currentProduct = await context.Products.FindAsync(id);
@@ -246,6 +246,7 @@ namespace asm_final_1.Controllers
 
         // Product - DELETE
         [Route("admin/manage-products/delete/${id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var product = await context.Products.FindAsync(id);

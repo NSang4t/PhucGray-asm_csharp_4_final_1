@@ -48,12 +48,20 @@ body {
     display: block;
 }
 
+.admin-nav .nav__right:focus .nav__dropdown {
+    display: block;
+}
+
 .admin-nav .nav__dropdown {
     display: none;
 
     position: absolute;
     left: -50%;
     top: 100%;
+}
+
+.admin-nav .nav__dropdown:hover {
+    display: block;
 }
 /*-------------------------------------------body------------------------*/
 
