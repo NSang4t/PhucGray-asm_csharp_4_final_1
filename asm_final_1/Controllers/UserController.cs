@@ -29,14 +29,14 @@ namespace asm_final_1.Controllers
         [HttpGet]
         [Authorize(Policy = "DenyCustomer")]
 
-        public async Task<IActionResult> Users(string SearchText = "", int page = 1)
+        public async Task<IActionResult> Users(string keyword = "", int page = 1)
         {
             List<User> users = await context.Users.ToListAsync();
             //
 
-            if (SearchText != null && SearchText != "")
+            if (keyword != null && keyword != "")
             {
-                users = users.Where(p => p.FirstName.ToLower().Contains(SearchText.ToLower())).ToList();
+                users = users.Where(p => p.FirstName.ToLower().Contains(keyword.ToLower())).ToList();
             }
             else
             {
@@ -58,6 +58,7 @@ namespace asm_final_1.Controllers
 
             ViewBag.users = data;
             ViewBag.pager = pager;
+            ViewBag.keyword = keyword;
 
             //
             var roles = await context.Roles.ToListAsync();

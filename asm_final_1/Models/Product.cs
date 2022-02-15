@@ -17,21 +17,25 @@ namespace asm_final_1.Models
         public int CategoryId { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập tên sản phẩm")]
-        [StringLength(maximumLength: 255, MinimumLength = 10, ErrorMessage = "Nhập tên sản phẩm từ 10 - 255 kí tự")]
+        [StringLength(maximumLength: 255, MinimumLength = 10, ErrorMessage = "Vui lòng nhập tên sản phẩm từ 10 - 255 kí tự")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập alias")]
-        [StringLength(maximumLength: 255, MinimumLength = 10, ErrorMessage = "Nhập alias từ 10 - 255 kí tự")]
+        [StringLength(maximumLength: 255, MinimumLength = 10, ErrorMessage = "Vui lòng nhập alias từ 10 - 255 kí tự")]
         public string Alias { get; set; }
 
-        [StringLength(maximumLength: 255, ErrorMessage = "Nhập tên thương hiệu từ 10 - 255 kí tự")]
+        [StringLength(maximumLength: 255, ErrorMessage = "Vui lòng nhập tên thương hiệu từ 10 - 255 kí tự")]
         [Required(ErrorMessage = "Vui lòng nhập tên thương hiệu")]
         public string Brand { get; set; }
 
+        [Range(1, double.PositiveInfinity, ErrorMessage = "Vui lòng nhập giá nhập kho > 0")]
         public double ImportPrice { get; set; }
 
+        [Range(1, double.PositiveInfinity, ErrorMessage = "Vui lòng nhập giá > 0")]
         public double Price { get; set; }
         public double? HotPrice { get; set; }
+
+        [Range(1, double.PositiveInfinity, ErrorMessage = "Vui lòng nhập số lượng > 0")]
         public int Quantity { get; set; }
 
         [MinLength(10, ErrorMessage = "Vui lòng nhập mô tả ít nhất 10 ký tự")]

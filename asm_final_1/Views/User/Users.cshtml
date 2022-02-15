@@ -21,6 +21,8 @@
     {
         currentUserId = User.Claims.First(c => c.Type.Contains("nameidentifier")).Value;
     }
+
+    var keyword = ViewBag.keyword;
 }
 
 <div>
@@ -104,16 +106,18 @@
             }
 
             @for (int page = pager.StartPage; page <= pager.EndPage; page++)
-            {
+             {
                 <li class="page-item @(page == pager.CurrentPage ? "active" : "")">
-                    <a class="page-link" asp-controller="user" asp-action="users" asp-route-page="@(page)">@(page)</a>
+                    <a class="page-link" asp-controller="user" asp-action="users" asp-route-page="@(page)" asp-route-keyword="@(keyword ?? "")">@(page)</a>
                 </li>
-            }
+             }
 
             @if (pager.CurrentPage >= 1 && pager.CurrentPage < pager.TotalPages)
-            {
-                <li class="page-item"><a class="page-link" asp-controller="product" asp-action="products" asp-route-page="@(pager.CurrentPage + 1)">Trang sau</a></li>
-            }
+             {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="product" asp-action="products" asp-route-page="@(pager.CurrentPage + 1)" asp-route-keyword="@(keyword ?? "")">Trang sau</a>
+                </li>
+             }
         </ul>
     }
 </div>

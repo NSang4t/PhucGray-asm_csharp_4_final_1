@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -282,6 +283,13 @@ namespace asm_final_1.Controllers
             var product = await context.Products.FindAsync(id);
             context.Products.Remove(product);
             await context.SaveChangesAsync();
+
+            string path = Path.Combine(webHostEnvironment.WebRootPath, "images\\products\\", product.Image);
+
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
 
             return RedirectToAction("products", "product");
         }
