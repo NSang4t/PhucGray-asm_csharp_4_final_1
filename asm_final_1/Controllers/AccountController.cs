@@ -113,16 +113,14 @@ namespace asm_final_1.Controllers
             }
             else if (ModelState.IsValid)
             {
-                var customerRole = await context.Roles.Where(r => r.Name == "customer").ToListAsync();
-
                 var newUser = new User
-                {
+                {   
                     LastName = user.LastName ?? null,
                     FirstName = user.FirstName,
                     Phone = user.Phone,
                     Email = user.Email,
                     Password = user.Password,
-                    RoleId = customerRole[0].Id,
+                    RoleId = 3, //
                     Address = user.Address ?? null,
                     Image = null
                 };

@@ -15,7 +15,7 @@
             <div class="home__products">
                 @foreach (Product product in filteredProducts)
                 {
-                    <a class="product" asp-controller="product" asp-action="productDetail" asp-route-alias="@product.Alias">
+                    <a class="product" asp-controller="product" asp-action="productDetail" asp-route-name="@product.Name">
                         <img class="product__img" src="~/images/products/@product.Image" alt="afjawf" />
                         <div class="product__name">@product.Name</div>
                         <div class="product__old-price">

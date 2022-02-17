@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace asm_final_1.Controllers
 {
@@ -44,10 +45,12 @@ namespace asm_final_1.Controllers
         }
 
         // Product detail - GET
-        [Route("/{alias}")]
-        public async Task<IActionResult> ProductDetail(string alias)
+        [Route("/{name}")]
+        public async Task<IActionResult> ProductDetail(string name)
         {
-            var currentProduct = await context.Products.SingleAsync(p => p.Alias == alias);
+            var decodeName = HttpUtility.UrlDecode(name);
+
+            var currentProduct = await context.Products.SingleAsync(p => p.Name == decodeName);
             var categories = await context.Categories.ToListAsync();
             var cart = CustomSessionExtensions.GetSessionData<List<Item>>(HttpContext.Session, "cart");
 
@@ -169,7 +172,11 @@ namespace asm_final_1.Controllers
             {
                 TempData["add-product__alert"] = AlertExtensions.ShowAlert(Alerts.Danger, "Tên sản phẩm đã tồn tại");
             }
-
+            else if(product.ImageFile == null)
+            {
+                //TempData["add-product__alert"] = AlertExtensions.ShowAlert(Alerts.Danger, "Vui lòng chọn ảnh");
+                ModelState.TryAddModelError("ImageError", "Vui lòng chọn ảnh");
+            }
             else if (ModelState.IsValid)
             {
                 string imgPath = FileExtension.UploadFile(product.ImageFile, webHostEnvironment);
@@ -178,7 +185,6 @@ namespace asm_final_1.Controllers
                 {
                     Name = product.Name,
                     CategoryId = product.CategoryId,
-                    Alias = product.Alias,
                     Brand = product.Brand,
                     ImportPrice = product.ImportPrice,
                     Price = product.Price,
@@ -245,7 +251,6 @@ namespace asm_final_1.Controllers
 
                 currentProduct.Name = product.Name;
                 currentProduct.CategoryId = product.CategoryId;
-                currentProduct.Alias = product.Alias;
                 currentProduct.Brand = product.Brand;
                 currentProduct.ImportPrice = product.ImportPrice;
                 currentProduct.Price = product.Price;

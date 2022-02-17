@@ -33,9 +33,9 @@
                         <div style="min-width: fit-content; margin: auto 0;">
                             <div style="font-weight: bold; font-size: 18px;">
                                 @if (item.Product.HotPrice != null)
-                                {
+                                 {
                                     @item.Product.HotPrice?.ToString("0,000")
-                                }
+                                 }
                                 else
                                 {
                                     @item.Product.Price.ToString("0,000")
@@ -72,10 +72,15 @@
                 </div>
                 <div class="text-right">(Đã bao gồm VAT)</div>
 
-                <div class="text-center">
-                    <a class="btn btn-primary w-100 mt-4" style="height: 50px; display: grid; place-items: center;"
-                       asp-controller="cart" asp-action="checkout" asp-route-isSignedIn="@User.Identity.IsAuthenticated">Thanh toán</a>
-                </div>
+                <a class="btn btn-primary w-100 mt-4" style="height: 50px; display: grid; place-items: center;"
+                   asp-controller="cart" asp-action="checkout">
+                    Thanh toán
+                </a>
+
+                <a class="btn btn-outline-primary w-100 mt-4"  style="height: 50px; display: grid; place-items: center;" 
+                   asp-controller="product" asp-action="home">
+                    Tiếp tục mua sắm
+                </a>
             </div>
         </div>
     }

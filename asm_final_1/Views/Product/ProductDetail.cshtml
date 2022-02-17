@@ -5,7 +5,13 @@
     Layout = "_Layout";
 }
 
+
+
 <div class="product-detail-home__wrapper">
+    <div>
+        @Html.Raw(TempData["add-to-cart__alert"])
+    </div>
+
     <div class="product-detail__content">
         <img class="product-detail__left" src="./images/products/@currentProduct.Image" alt="afaf" />
 
@@ -31,8 +37,19 @@
                 }
             </div>
 
-            <div class="text-center">
-                <a class="btn btn-primary w-75 mt-4 py-3" asp-controller="cart" asp-action="buy" asp-route-id="@currentProduct.Id">Thêm vào giỏ hàng</a>
+            <div class="d-flex flex-wrap justify-content-center" style="gap: 20px;">
+                <a class="btn btn-outline-primary mt-4 py-3"
+                   style="width: 100%; max-width: 300px;"
+                   asp-controller="cart" asp-action="addToCart"
+                   asp-route-id="@currentProduct.Id">
+                    Thêm vào giỏ hàng
+                </a>
+                <a class="btn btn-primary mt-4 py-3"
+                   style="width: 100%; max-width: 300px;"
+                   asp-controller="cart" asp-action="buy"
+                   asp-route-id="@currentProduct.Id">
+                    Mua ngay
+                </a>
             </div>
         </div>
     </div>

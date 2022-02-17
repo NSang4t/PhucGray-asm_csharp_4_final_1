@@ -20,10 +20,6 @@ namespace asm_final_1.Models
         [StringLength(maximumLength: 255, MinimumLength = 10, ErrorMessage = "Vui lòng nhập tên sản phẩm từ 10 - 255 kí tự")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập alias")]
-        [StringLength(maximumLength: 255, MinimumLength = 10, ErrorMessage = "Vui lòng nhập alias từ 10 - 255 kí tự")]
-        public string Alias { get; set; }
-
         [StringLength(maximumLength: 255, ErrorMessage = "Vui lòng nhập tên thương hiệu từ 10 - 255 kí tự")]
         [Required(ErrorMessage = "Vui lòng nhập tên thương hiệu")]
         public string Brand { get; set; }

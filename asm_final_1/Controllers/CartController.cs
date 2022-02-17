@@ -3,6 +3,7 @@ using asm_final_1.Models.OthersModels;
 using asm_final_1.Utils;
 using asm_rewrite.Enums;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +47,40 @@ namespace asm_final_1.Controllers
                 }
             }
             return -1;
+        }
+
+        [Route("addToCart/{id}")]
+        public async Task<IActionResult> AddToCart(int id)
+        {
+            var currentProduct = await context.Products.SingleAsync(p => p.Id == id);
+
+            if (CustomSessionExtensions.GetSessionData<List<Product>>(HttpContext.Session, "cart") == null)
+            {
+                var newItem = new Item { Product = context.Products.Single(p => p.Id == id), Quantity = 1 };
+
+                List<Item> cart = new List<Item>();
+                cart.Add(newItem);
+                CustomSessionExtensions.SetSessionData(HttpContext.Session, "cart", cart);
+            }
+            else
+            {
+                List<Item> cart = CustomSessionExtensions.GetSessionData<List<Item>>(HttpContext.Session, "cart");
+                int index = CheckIsProductExists(id);
+                if (index != -1)
+                {
+                    cart[index].Quantity++;
+                }
+                else
+                {
+                    var newItem = new Item { Product = context.Products.Single(p => p.Id == id), Quantity = 1 };
+                    cart.Add(newItem);
+                }
+                CustomSessionExtensions.SetSessionData(HttpContext.Session, "cart", cart);
+            }
+
+            TempData["add-to-cart__alert"] = AlertExtensions.ShowAlert(Alerts.Success, "Đã thêm sản phẩm vào giỏ hàng");
+
+            return RedirectToAction("ProductDetail", "Product", new { name = currentProduct.Name });
         }
 
         [Route("buy/{id}")]
@@ -112,10 +147,10 @@ namespace asm_final_1.Controllers
             return RedirectToAction("index");
         }
 
-        [Route("cart/checkout/{isSignedIn}")]
-        public IActionResult Checkout(bool isSignedIn)
+        [Route("cart/checkout")]
+        public IActionResult Checkout()
         {
-            if(isSignedIn)
+            if(User.Identity.IsAuthenticated)
             {
                 List<Item> cart = CustomSessionExtensions.GetSessionData<List<Item>>(HttpContext.Session, "cart");
 

@@ -45,7 +45,8 @@
         <div class="home__products">
             @foreach (Product product in topProducts)
             {
-                <a class="product" asp-controller="product" asp-action="productDetail" asp-route-alias="@product.Alias">
+            <div class="product-wrapper">
+                <a class="product" asp-controller="product" asp-action="productDetail" asp-route-name="@(product.Name)">
                     <img class="product__img" src="./images/products/@product.Image" alt="afjawf" />
                     <div class="product__name">@product.Name</div>
 
@@ -75,6 +76,23 @@
                         đ
                     </div>
                 </a>
+
+                <div class="buttons" 
+                     style="">
+                    <a class="btn btn-danger"
+                       style="width: 140px;"
+                       asp-controller="cart" asp-action="addToCart"
+                       asp-route-id="@product.Id">
+                        Thêm giỏ hàng
+                    </a>
+                    <a class="btn btn-primary"
+                           style="width: 140px;"
+                       asp-controller="cart" asp-action="buy"
+                       asp-route-id="@product.Id">
+                        Mua ngay
+                    </a>
+                </div>
+            </div>
             }
         </div>
     </section>
@@ -85,7 +103,7 @@
         <div class="home__products">
             @foreach (Product product in bestSellerProducts)
             {
-                <a class="product" asp-controller="product" asp-action="productDetail" asp-route-alias="@product.Alias">
+                <a class="product" asp-controller="product" asp-action="productDetail" asp-route-name="@product.Name">
                     <img class="product__img" src="./images/products/@product.Image" alt="afjawf" />
                     <div class="product__name">@product.Name</div>
                     <div class="product__old-price">

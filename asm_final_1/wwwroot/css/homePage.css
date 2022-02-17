@@ -109,3 +109,23 @@
     font-size: 18px;
 }
 
+/*d-flex justify-content-center w-100 text-center*/
+.product-wrapper {
+    position: relative;
+}
+
+.product-wrapper:hover .buttons {
+    display: flex;
+}
+
+.buttons {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    width: 100%;
+    text-align: center;
+}

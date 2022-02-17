@@ -77,7 +77,9 @@
         <ul class="pagination mt-4 d-flex justify-content-center">
             @if (pager.CurrentPage > 1)
              {
-                <li class="page-item"><a class="page-link" asp-controller="product" asp-action="products" asp-route-page="@(pager.CurrentPage - 1)">Trang trước</a></li>
+                <li class="page-item">
+                    <a class="page-link" asp-controller="product" asp-action="products" asp-route-page="@(pager.CurrentPage - 1)" asp-route-keyword="@(keyword ?? "")">Trang trước</a>
+                </li>
              }
 
 
